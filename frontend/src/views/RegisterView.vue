@@ -66,31 +66,63 @@ export default {
 }
 
 #header {
-  font-size: 48px;
+  font:"Inter";
+  font-size: 70px;
   font-weight: bold;
-  margin-bottom: 20px;
+  display:flex;
+  position:relative;
+  left: 69px;
+  top: 10px;
+  width:300px;
+  margin:0;
+  padding:0;
 }
 
 #input-container {
-  margin-bottom: 20px;
+  width: 300px;
+  height: 240px;
+  display: block;
+  position: relative;
+  align-items: center;
+  left:3vw;
+
 }
 
 input {
-  width: 100%;
-  height: 40px;
-  margin-bottom: 10px;
-  padding: 0 10px;
-  font-size: 16px;
+  height: 70px;
+  width: 300px;
+  border-radius: 25px;
+  border: 0;
+  font-size: 20px;
+  text-indent: 20px;
+  margin-top: 1vh;
+  font: "Inter";
+  color: var(--color);
+  background-color: var(--color-light-dark-red);
+  position: relative;
+  align-items: center;
 }
 
 #reg-but {
-  width: 100%;
-  height: 40px;
-  background-color: var(--color-red);
-  color: white;
+  height: 45px;
+  width: 150px;
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  border-radius: 25px;
+  display: flex;
+  position: relative;
+  left: 6.5vw;
+  top: 18vh;
+  display: table-cell;
+  vertical-align: middle;
+  background-color: var(--color-red);
+  color: var(--color-text);
+  font: "Inter";
+  font-size: 18px;
+}
+
+#reg-but:hover{
+  transform: scale(1.10);
+  border: 1px white solid;
 }
 
 .error-message {

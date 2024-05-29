@@ -35,7 +35,7 @@
 
 <script>
 import Header from '../components/Header.vue';
-import Line from '../components/Line.vue';
+import Line from '../components/line.vue';
 import axios from 'axios';
 
 export default {
@@ -157,6 +157,7 @@ Header{
 }
 #forums-header{
     padding-right: 20px;
+    font-weight: 500;
 }
 #forum-container {
     display: flex;

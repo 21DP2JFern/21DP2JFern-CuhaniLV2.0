@@ -5,7 +5,7 @@
             <h1 id="cuhani-text">ČUHANI</h1>
         </RouterLink>
         <RouterLink to="/profile">
-            <button id="profile-but" v-if="profileData">cau {{ profileData.name }}</button>
+            <button id="profile-but">Your Profile</button>
         </RouterLink>
     </div>
     <div id="sidebar">
@@ -131,7 +131,7 @@ export default {
 
 #profile-but {
     position: absolute;
-    right: 0;
+    right: 1vw;
     top: 0;
     height: 5vh;
     background: transparent;
@@ -142,6 +142,8 @@ export default {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: medium;
+
 }
 
 #sidebar {

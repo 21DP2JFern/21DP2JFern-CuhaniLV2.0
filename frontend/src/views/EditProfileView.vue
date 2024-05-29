@@ -17,7 +17,7 @@
     
     <script>
     import Header from '../components/Header.vue'
-    import Line from '../components/Line.vue'
+    import Line from '../components/line.vue'
     import axios from 'axios'
     
     export default{

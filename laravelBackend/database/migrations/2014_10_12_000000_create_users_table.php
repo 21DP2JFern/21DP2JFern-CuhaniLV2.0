@@ -22,6 +22,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->integer('role_id')->default('2');
             $table->timestamps();
+            
         });
     }
 

@@ -37,9 +37,9 @@
     <div class="modal-content">
       <span class="close" @click="showModal = false">&times;</span>
       <form @submit.prevent="addComment">
-        <label for="commentContent">Comment:</label>
+        <label id="comment-label" for="commentContent">Comment:</label>
         <textarea id="commentContent" v-model="commentContent" required></textarea>
-        <button  type="submit">Submit Comment</button>
+        <button id="submit-but" type="submit">Submit Comment</button>
       </form>
     </div>
   </div>
@@ -444,6 +444,46 @@ h2{
 #post-but:hover{
     transform: scale(1.10);
     border: 1px white solid;
+}
+#comment-label{
+  font:"Inter";
+  font-size: 24px;
+}
+#commentContent{
+  position:relative;
+    font-size: 18px;
+    width: 35vw;
+    height:20vh;
+    margin-top:10px;
+    border-radius: 25px;
+    border: 0;
+    font-size: 20px;
+    color: var(--color-text);
+    background-color: var(--color-light-dark-red);
+    padding: 5px;
+    text-indent: 10px;
+    font: "Inter";
+}
+
+#submit-but{
+  height: 45px;
+  width: 300px;
+  border: none;
+  border-radius: 25px;
+  display: flex;
+  position: relative;
+  display: table-cell;
+  vertical-align: middle;
+  background-color: var(--color-red);
+  color: var(--color-text);
+  font: "Inter";
+  font-size: 18px;
+  text-decoration: none;
+}
+
+#submit-but:hover{
+  transform: scale(1.10);
+  border: 1px white solid;
 }
 
 .close {

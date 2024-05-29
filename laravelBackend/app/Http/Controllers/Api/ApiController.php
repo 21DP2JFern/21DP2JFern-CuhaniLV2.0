@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-
+use App\Models\Friendship;
 
 class ApiController extends Controller
 {
@@ -178,6 +178,48 @@ class ApiController extends Controller
         ]);
     }
 
+    public function getAllUsersForumPosts(Request $request)
+    {
+        $user = Auth::user();
+        $sortBy = $request->query('sortBy', 'most-recent'); // Default sort order
+
+        $query = ForumPost::where('autors', $user->id);
+
+        if ($sortBy === 'most-recent') {
+            $query->orderBy('created_at', 'desc');
+        } elseif ($sortBy === 'oldest') {
+            $query->orderBy('created_at', 'asc');
+        } else {
+            // Handle invalid sortBy parameter
+            return response()->json(['error' => 'Invalid sortBy parameter'], 400);
+        }
+
+        $forumPosts = $query->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'All forum posts retrieved successfully',
+            'data' => $forumPosts,
+        ]);
+    }
+
+    public function getAllFriendsForumPosts()
+    {
+        $user = Auth::user();
+        
+        // Retrieve the IDs of the user's friends
+        $friendIds = Friendship::where('user_id', $user->id)->pluck('friend_id');
+
+        // Retrieve all forum posts posted by the user's friends
+        $forumPosts = ForumPost::whereIn('autors', $friendIds)->get();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Forum posts from friends retrieved successfully',
+            'data' => $forumPosts,
+        ]);
+    }
+
     public function createComment(Request $request){
         $request->validate([
             'post_id' => 'required|exists:forum_posts,id',
@@ -301,6 +343,81 @@ public function countForumPosts()
         'status' => true,
         'message' => 'Total number of forum posts retrieved successfully',
         'data' => $postCount,
+    ]);
+
+    
+}
+
+public function searchUsers(Request $request){
+    $query = $request->input('query');
+    $users = User::where('username', 'LIKE', "%{$query}%")->get(['id', 'username']);
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Users retrieved successfully',
+        'data' => $users,
+    ]);
+}
+
+public function addFriend(Request $request)
+{
+    $user = Auth::user();
+
+    $request->validate([
+        'friend_id' => 'required|exists:users,id',
+    ]);
+
+    // Check if the friendship already exists
+    if (Friendship::where('user_id', $user->id)->where('friend_id', $request->friend_id)->exists()) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Friendship already exists',
+        ], 400);
+    }
+
+    // Fetch the friend's username
+    $friend = User::find($request->friend_id);
+    if (!$friend) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Friend not found',
+        ], 404);
+    }
+
+    // Create the friendship record
+    $friendship = new Friendship();
+    $friendship->user_id = $user->id;
+    $friendship->friend_id = $request->friend_id;
+    $friendship->Fusername = $friend->username; // Save friend's username
+    $friendship->save();
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Friend added successfully',
+        'friendship' => $friendship,
+    ]);
+}
+
+public function getUserFriends()
+{
+    $user = Auth::user();
+
+    // Retrieve the user's friends
+    $friends = Friendship::where('user_id', $user->id)->with('friend')->get();
+
+    $friendUsernames = $friends->map(function ($friendship) {
+        return [
+            'id' => $friendship->friend->id,
+            'Fusername' => $friendship->friend->username,
+        ];
+    });
+
+
+    return response()->json([
+        'status' => true,
+        'message' => 'User friends retrieved successfully',
+        'friends' => $friends,
+        'usernames' =>$friendUsernames,
     ]);
 }
 }

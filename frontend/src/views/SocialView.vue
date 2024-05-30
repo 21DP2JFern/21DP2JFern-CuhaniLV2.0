@@ -53,7 +53,7 @@ export default {
         // Method to search for users
         searchFriends() {
             const token = localStorage.getItem('authToken');
-            axios.post('/searchUsers', { query: this.searchQuery }, {
+            axios.post('/api/searchUsers', { query: this.searchQuery }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -68,7 +68,7 @@ export default {
         // Method to add a friend
         addFriend(friendId) {
             const token = localStorage.getItem('authToken');
-            axios.post('/addFriend', { friend_id: friendId }, {
+            axios.post('/api/addFriend', { friend_id: friendId }, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -84,7 +84,7 @@ export default {
         // Method to retrieve the user's friends list
         getFriends() {
             const token = localStorage.getItem('authToken');
-            axios.get('/getUserFriends', {
+            axios.get('/api/getUserFriends', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

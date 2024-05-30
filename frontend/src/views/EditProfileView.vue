@@ -66,7 +66,7 @@
                     const changeUsernameText = document.getElementById('change_username').value;
 
     
-                    axios.post('/updateProfile', {
+                    axios.post('/api/updateProfile', {
                         bio: bioText,
                         username: changeUsernameText
 

@@ -57,7 +57,7 @@ export default {
         async getForumPost() {
             const token = localStorage.getItem('authToken'); 
             try {
-                const response = await axios.get('/getAllForumPosts', {
+                const response = await axios.get('/api/getAllForumPosts', {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

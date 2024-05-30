@@ -34,7 +34,7 @@ export default {
   methods: {
     async register() {
       try {
-        const response = await axios.post('/register', this.formData);
+        const response = await axios.post('/api/register', this.formData);
         console.log(response.data);
         alert("Registration successful!");
         // Optionally, you can redirect to another route upon successful registration

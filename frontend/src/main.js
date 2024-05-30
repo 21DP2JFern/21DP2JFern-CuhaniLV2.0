@@ -7,7 +7,7 @@ import header from './components/Header.vue'
 
 import axios from 'axios';
 
-axios.defaults.baseURL = 'https://12djfernats.kvalifikacija.rvt.lv';
+axios.defaults.baseURL = 'https://api-12djfernats.kvalifikacija.rvt.lv';
 
 const app = createApp(App)
 

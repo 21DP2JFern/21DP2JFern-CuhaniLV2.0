@@ -114,7 +114,7 @@ export default{
     },
     methods:{
         fetchProfile(authToken){
-                axios.get('/getUserProfile', {
+                axios.get('/api/getUserProfile', {
                     headers: {
                         Authorization: `Bearer ${authToken}`
                     }
@@ -129,7 +129,7 @@ export default{
             async getForumPost() {
             const token = localStorage.getItem('authToken'); 
             try {
-                const response = await axios.get('/getAllFriendsForumPosts', {
+                const response = await axios.get('/api/getAllFriendsForumPosts', {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

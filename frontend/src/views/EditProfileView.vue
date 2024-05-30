@@ -87,7 +87,7 @@
                 deleteProfile(){
                     const authToken = localStorage.getItem('authToken');
                     localStorage.removeItem('authToken');
-                    axios.delete('http://127.0.0.1:8000/api/deleteProfile').then(response => {
+                    axios.delete('/api/deleteProfile').then(response => {
                         console.log(response.data.message);
                         alert('Account deleted succesfully');
                         this.$router.push('/login');

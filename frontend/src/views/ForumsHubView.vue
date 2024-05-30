@@ -126,7 +126,7 @@ export default {
         async getPostCount() {
         const token = localStorage.getItem('authToken');
         try {
-            const response = await axios.get('/countForumPosts', {
+            const response = await axios.get('/api/countForumPosts', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

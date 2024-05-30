@@ -95,7 +95,7 @@ export default {
             try {
                 const profileData = await this.fetchProfile();
                 if (profileData) {
-                    const response = await axios.post('/createForumPost', {
+                    const response = await axios.post('/api/createForumPost', {
                         nosaukums: this.newPostTitle,
                         saturs: this.newPostContent,
                         autors: profileData.id // Use the actual user ID from the profile data

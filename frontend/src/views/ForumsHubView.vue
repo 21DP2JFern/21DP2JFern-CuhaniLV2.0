@@ -76,7 +76,7 @@ export default {
         async fetchProfile() {
             const token = localStorage.getItem('authToken'); 
             try {
-                const response = await axios.get('/getUserProfile', {
+                const response = await axios.get('/api/getUserProfile', {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

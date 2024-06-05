@@ -68,11 +68,6 @@ const router = createRouter({
       path: '/forums_hub',
       name: 'forumshub',
       component: ForumsHubView
-    },
-    {
-      path: '/NewForumPost',
-      name: 'forumspost',
-      component: NewForumsPostView
     }
   ],
 });

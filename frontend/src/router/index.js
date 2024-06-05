@@ -7,8 +7,7 @@ import SocialView from '../views/SocialView.vue';
 import ForgotPassView from '../views/ForgotPassView.vue';
 import NewsView from '../views/NewsView.vue';
 import ForumsHubView from '../views/ForumsHubView.vue';
-import NewForumsPostView from '../views/NewForumPost.vue';
-import PostDetails from '../components/PostDetails.vue'; // Corrected import path for a component
+import PostDetails from '../components/PostDetails.vue'; 
 import EditProfileView from '../views/EditProfileView.vue'
 
 

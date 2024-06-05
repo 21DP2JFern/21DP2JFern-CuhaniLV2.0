@@ -4,7 +4,7 @@
     <h1 id="welcome-text" v-if="profileData">Welcome, {{ profileData.username }}!</h1>
     <Line id="line" />
     <div id="friend-activity-container">
-        <p id="friend-activity">Friend activity</p>
+        <p id="friend-activity">Followed users activity</p>
         <div id="post-container">
         <ul class="post-list">
             <li v-for="(post, index) in posts" :key="index" class="post-box" @click="navigateToPost(post.id)"> 

@@ -2,9 +2,9 @@
     <div>
         <Header />
 
-        <!-- Display Friends -->
+
         <div id="friends-div">
-            <h1 id="friends-header">Your friends</h1>
+            <h1 id="friends-header">Users you follow</h1>
             <Line id="line" />
             <div id="friend-prof-container">
                 <div class="friend-card" v-for="friend in friends" :key="friend.id">
@@ -14,17 +14,17 @@
             </div>
         </div>
 
-        <!-- Add Friends -->
+
         <div id="find-friends-div">
-            <h1 id="find-friends-header">Add friends</h1>
-            <input id="search-bar" type="text" v-model="searchQuery" placeholder="Search for friends..." />
+            <h1 id="find-friends-header">Search for users</h1>
+            <input id="search-bar" type="text" v-model="searchQuery" placeholder="Search for users..." />
             <button id="search-but" type="submit" @click="searchFriends">Search</button>
             <Line id="line" />
             <div id="search-results">
                 <div class="friend-card" v-for="user in searchResults" :key="user.id">
                     <div class="prof-pic"></div>
                     <p class="FUsername">{{ user.username }}</p>
-                    <button class="AddFProf" @click="addFriend(user.id)">Add friend</button> <!-- Add friend button -->
+                    <button class="AddFProf" @click="addFriend(user.id)">Follow</button> 
                 </div>
             </div>
         </div>
@@ -44,13 +44,13 @@ export default {
     },
     data() {
         return {
-            friends: [],        // Store the user's friends
-            searchQuery: '',    // Store the search query
-            searchResults: []   // Store search results
+            friends: [],        
+            searchQuery: '',    
+            searchResults: []   
         };
     },
     methods: {
-        // Method to search for users
+
         searchFriends() {
             const token = localStorage.getItem('authToken');
             axios.post('/api/searchUsers', { query: this.searchQuery }, {
@@ -65,7 +65,7 @@ export default {
                 console.error('Error searching users:', error);
             });
         },
-        // Method to add a friend
+
         addFriend(friendId) {
             const token = localStorage.getItem('authToken');
             axios.post('/api/addFriend', { friend_id: friendId }, {
@@ -74,14 +74,13 @@ export default {
                 }
             })
             .then(response => {
-                // Update the friends list after adding a friend
                 this.getFriends();
             })
             .catch(error => {
                 console.error('Error adding friend:', error);
             });
         },
-        // Method to retrieve the user's friends list
+
         getFriends() {
             const token = localStorage.getItem('authToken');
             axios.get('/api/getUserFriends', {
@@ -99,7 +98,7 @@ export default {
     },
 
     mounted() {
-        // Fetch the user's friends list when the component is mounted
+
         this.getFriends();
     }
 };
@@ -218,6 +217,9 @@ export default {
         height: 550px;
         border-radius: 25px;
         margin-top: 40px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
     }
 
 
@@ -235,7 +237,7 @@ export default {
 
     #search-bar{
         position: relative;
-        left: 16vw;
+        left: 20vw;
         top: -2.5vh;
         height: 40px;
         width: 300px;
@@ -250,7 +252,7 @@ export default {
 
     #search-but{
         position: relative;
-        left: 17vw;
+        left: 21vw;
         top: -2.5vh;
         height: 40px;
         width: 150px;
@@ -265,9 +267,13 @@ export default {
     }
 
     #search-results{
-        margin-top: 2vh;
-        margin-left: 2vw;
-        overflow-x: scroll;
+        margin-top: 25px;
+        margin-left: 35px;
+        width: 90%;
+        height: 420px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
     }
     
     #bottom{

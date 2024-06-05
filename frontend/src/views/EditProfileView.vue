@@ -52,16 +52,15 @@
                 },
     
                 updateProfile() {
-                    // Retrieve authToken from local storage
+                    
                     const authToken = localStorage.getItem('authToken');
     
-                    // Check if authToken exists before proceeding
                     if (!authToken) {
                         console.error('Authentication token not found.');
                         return;
                     }
     
-                    // Get the bio text from the textarea
+                    
                     const bioText = document.getElementById('biobox').value;
                     const changeUsernameText = document.getElementById('change_username').value;
 

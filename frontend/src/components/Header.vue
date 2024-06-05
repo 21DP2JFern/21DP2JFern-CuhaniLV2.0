@@ -26,7 +26,7 @@
         </div>
         <div class="Friends">
             <RouterLink to="/friends">
-                <button class="button">Friends</button>
+                <button class="button">Social</button>
             </RouterLink>
         </div>
         <div class="log-out">

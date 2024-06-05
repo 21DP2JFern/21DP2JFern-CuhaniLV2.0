@@ -52,7 +52,7 @@ class ApiController extends Controller
                 'status'=> true,
                 'message'=>'User logged in successfully',
                 'token'=> $token,
-                'name'=> $user->name // Return the user's name
+                'name'=> $user->name 
             ]);
 
         }else{
@@ -89,7 +89,7 @@ class ApiController extends Controller
         ]);
     }
     public function updateProfile(Request $request){
-        $user = Auth::user(); // Assuming the user is authenticated
+        $user = Auth::user(); 
         $user->update(['bio' => $request->input('bio')]);
         $user->update(['username' => $request->input('username')]);
 
@@ -129,7 +129,6 @@ class ApiController extends Controller
              'date' => $date,
          ]);
      
-         // Increment the post count
          $postCount = PostCount::first();
          if ($postCount) {
              $postCount->count += 1;
@@ -145,7 +144,6 @@ class ApiController extends Controller
              'data' => $forumPost,
          ]);
      }
-    // paņem kādu id tu gribi atrast
     public function getForumPost(Request $id){
 
         $user = Auth::user();
@@ -181,7 +179,7 @@ class ApiController extends Controller
     public function getAllUsersForumPosts(Request $request)
     {
         $user = Auth::user();
-        $sortBy = $request->query('sortBy', 'most-recent'); // Default sort order
+        $sortBy = $request->query('sortBy', 'most-recent'); 
 
         $query = ForumPost::where('autors', $user->id);
 
@@ -190,7 +188,6 @@ class ApiController extends Controller
         } elseif ($sortBy === 'oldest') {
             $query->orderBy('created_at', 'asc');
         } else {
-            // Handle invalid sortBy parameter
             return response()->json(['error' => 'Invalid sortBy parameter'], 400);
         }
 
@@ -207,10 +204,8 @@ class ApiController extends Controller
     {
         $user = Auth::user();
         
-        // Retrieve the IDs of the user's friends
         $friendIds = Friendship::where('user_id', $user->id)->pluck('friend_id');
 
-        // Retrieve all forum posts posted by the user's friends
         $forumPosts = ForumPost::whereIn('autors', $friendIds)->get();
 
         return response()->json([
@@ -257,7 +252,7 @@ class ApiController extends Controller
         return response()->json([
             'status' => true,
             'message' => 'Comments retrieved successfully',
-            'comments' => $comments, // Ensure the key is 'comments'
+            'comments' => $comments, 
         ]);
     }
 
@@ -282,7 +277,6 @@ class ApiController extends Controller
 
     $post->delete();
 
-    // Decrement the post count
     $postCount = PostCount::first();
     if ($postCount && $postCount->count > 0) {
         $postCount->count -= 1;
@@ -336,7 +330,6 @@ public function countForumPosts()
 {
     $user = Auth::user();
 
-    // Count the total number of forum posts
     $postCount = ForumPost::count();
 
     return response()->json([
@@ -367,7 +360,6 @@ public function addFriend(Request $request)
         'friend_id' => 'required|exists:users,id',
     ]);
 
-    // Check if the friendship already exists
     if (Friendship::where('user_id', $user->id)->where('friend_id', $request->friend_id)->exists()) {
         return response()->json([
             'status' => false,
@@ -375,7 +367,6 @@ public function addFriend(Request $request)
         ], 400);
     }
 
-    // Fetch the friend's username
     $friend = User::find($request->friend_id);
     if (!$friend) {
         return response()->json([
@@ -384,11 +375,10 @@ public function addFriend(Request $request)
         ], 404);
     }
 
-    // Create the friendship record
     $friendship = new Friendship();
     $friendship->user_id = $user->id;
     $friendship->friend_id = $request->friend_id;
-    $friendship->Fusername = $friend->username; // Save friend's username
+    $friendship->Fusername = $friend->username; 
     $friendship->save();
 
     return response()->json([
@@ -402,7 +392,6 @@ public function getUserFriends()
 {
     $user = Auth::user();
 
-    // Retrieve the user's friends
     $friends = Friendship::where('user_id', $user->id)->with('friend')->get();
 
     $friendUsernames = $friends->map(function ($friendship) {

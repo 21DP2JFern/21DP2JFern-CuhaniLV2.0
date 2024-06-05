@@ -98,7 +98,7 @@ export default {
                     const response = await axios.post('/api/createForumPost', {
                         nosaukums: this.newPostTitle,
                         saturs: this.newPostContent,
-                        autors: profileData.id // Use the actual user ID from the profile data
+                        autors: profileData.id 
                     }, {
                         headers: {
                             Authorization: `Bearer ${token}`
@@ -106,10 +106,10 @@ export default {
                     });
                     if (response.data && response.data.status) {
                         alert('Post created successfully');
-                        this.newPostTitle = ''; // Clear the form fields
+                        this.newPostTitle = ''; 
                         this.newPostContent = '';
-                        this.showModal = false; // Close the modal
-                        this.getForumPost(); // Refresh the posts list
+                        this.showModal = false; 
+                        this.getForumPost(); 
                         window.location.reload();
                     } else {
                         alert('Error creating post');

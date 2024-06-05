@@ -13,12 +13,12 @@
     
     
 
-    <!-- Edit and Delete Post Buttons -->
+
     <button id="edit-but" v-if="isAuthorOrAdmin" @click="editPost">Edit Post</button>
     <button id="delete-but" v-if="isAuthorOrAdmin" @click="deletePost">Delete Post</button>
     <h2>Comments:</h2>
     <button id="add-comment-but" @click="showModal = true">Add Comment</button>
-    <!-- Display comments -->
+
     <div v-if="comments.length" id="comments-container">
       <div v-for="(comment, index) in comments" :key="index" class="comment-wrapper">
         <div>
@@ -76,7 +76,7 @@ export default {
       showEditModal: false,
       editedTitle: '',
       editedContent: '',
-      currentUser: null, // To hold the current user information
+      currentUser: null, 
     };
   },
   computed: {
@@ -99,10 +99,8 @@ export default {
         postData.authorProfile = authorProfile;
         this.post = postData;
 
-        // Fetch comments after getting the post
         await this.fetchComments(id);
 
-        // Fetch the current user
         this.currentUser = await this.fetchCurrentUser();
       } catch (error) {
         console.error("There was an error fetching the post:", error);
@@ -226,7 +224,7 @@ export default {
         if (response.data && response.data.status) {
           alert('Post edited successfully');
           this.showEditModal = false;
-          await this.getPost(postId); // Refresh the post data
+          await this.getPost(postId); 
         } else {
           alert('Error editing post');
         }

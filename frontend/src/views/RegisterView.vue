@@ -37,7 +37,6 @@ export default {
         const response = await axios.post('/api/register', this.formData);
         console.log(response.data);
         alert("Registration successful!");
-        // Optionally, you can redirect to another route upon successful registration
         this.$router.push("/");
       } catch (error) {
         if (error.response && error.response.data && error.response.data.errors) {
@@ -111,7 +110,7 @@ input {
   display: flex;
   position: relative;
   left: 6.5vw;
-  top: 18vh;
+  top: 20vh;
   display: table-cell;
   vertical-align: middle;
   background-color: var(--color-red);
@@ -127,6 +126,8 @@ input {
 
 .error-message {
   color: red;
-  margin-top: 10px;
+  margin-top: 12vh;
+  left:3vw;
+  position: relative;
 }
 </style>

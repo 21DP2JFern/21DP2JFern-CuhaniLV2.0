@@ -36,12 +36,12 @@ npm install
 
 ### Run in terminal
 ```
-1. Start frontend
+Start frontend
 
 cd frontend    
 npm run dev
 
-2. Start Laravel Backend
+Start Laravel Backend
 
 cd laravelBackend    
 php artisan serve

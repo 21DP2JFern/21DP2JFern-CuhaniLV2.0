@@ -1,21 +1,21 @@
-# Use official Node.js image as a parent image
-FROM node:16
+# Dockerfile
+FROM node:18-alpine as build
 
-# Set working directory inside the container
-WORKDIR /app
+# create destination directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-# Copy the package.json and install dependencies
-COPY package*.json ./
-RUN npm install
+# update and install dependency
+RUN apk update && apk upgrade
+RUN apk add git
 
-# Copy the rest of the application code to the working directory
-COPY . .
+# copy the app, note .dockerignore
+COPY . /usr/src/app/
+RUN yarn install
+RUN yarn run build
 
-# Build the Vue.js app for production
-RUN npm run build
-
-# Expose port 3000 for development (if using npm run serve) or the build if served via a server
+FROM nginx:stable-alpine
+COPY --from=build /usr/src/app/dist /bin/www
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 3000
-
-# Default command to run the frontend app
-CMD ["npm", "run", "serve"]
+CMD [ "nginx", "-g", "daemon off;" ]

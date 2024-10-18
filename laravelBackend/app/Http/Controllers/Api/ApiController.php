@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\Friendship;
+use Illuminate\Support\Facades\Log;
 
 class ApiController extends Controller
 {
@@ -18,7 +19,7 @@ class ApiController extends Controller
             "username" => "required",
             "name"=> "required",
             "email"=> "required|email|unique:users",
-            "password"=>"required|confirmed",
+            "password"=>"required|confirmed|min:8",
         ]);
 
         User::create([
@@ -38,6 +39,8 @@ class ApiController extends Controller
             "email"=> "required|email",
             "password"=>"required",
         ]);
+
+        Log::info('User login attempt', ['user_id' => $request->email]); 
 
         if(Auth::attempt([
             "email"=> $request->email,

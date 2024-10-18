@@ -21,32 +21,27 @@ use App\Http\Controllers\Api\ApiController;
 Route::post('/register', [ApiController::class, 'register']);
 Route::post('/login', [ApiController::class, 'login']);
 // Protected routes
-Route::group([
-    "middleware" => "auth:api"
-], function (){
+Route::middleware(['auth:api', 'throttle:60,1'])->group(function () {
     Route::get('/profile', [ApiController::class, 'profile']);
     Route::get('/logout', [ApiController::class, 'logout']);
     Route::get('/deleteUser', [ApiController::class, 'deleteUser']);
     Route::get('/getUserProfile', [ApiController::class, 'getUserProfile']);
-    Route::post('/updateProfile', [ApiController::class,'updateProfile']);
+    Route::post('/updateProfile', [ApiController::class, 'updateProfile']);
     Route::delete('/deleteProfile', [ApiController::class, 'deleteProfile']);
     Route::post('/createForumPost', [ApiController::class, 'createForumPost']);
-    Route::get('/getForumPost', [ApiController::class,'getForumPost']);
-    Route::get('/getAllForumPosts', [ApiController::class,'getAllForumPosts']);
+    Route::get('/getForumPost', [ApiController::class, 'getForumPost']);
+    Route::get('/getAllForumPosts', [ApiController::class, 'getAllForumPosts']);
     Route::get('/post/{id}', [ApiController::class, 'show']);
-    Route::middleware('auth:api')->delete('/deletePost/{id}', [ApiController::class, 'deletePost']);
+    Route::delete('/deletePost/{id}', [ApiController::class, 'deletePost']);
     Route::post('/editForumPost/{id}', [ApiController::class, 'editForumPost']);
     Route::get('/countForumPosts', [ApiController::class, 'countForumPosts']);
     Route::post('/searchUsers', [ApiController::class, 'searchUsers']);
     Route::post('/createComment', [ApiController::class, 'createComment']);
     Route::get('/getComments', [ApiController::class, 'getComments']);
-    Route::post('/addFriend',[ApiController::class,'addFriend']);
-    Route::get('/getUserFriends',[ApiController::class,'getUserFriends']);
-    Route::get('/getAllUsersForumPosts',[ApiController::class,'getAllUsersForumPosts']);
-    Route::get('/getAllFriendsForumPosts',[ApiController::class,'getAllFriendsForumPosts']);
-    
-
-
+    Route::post('/addFriend', [ApiController::class, 'addFriend']);
+    Route::get('/getUserFriends', [ApiController::class, 'getUserFriends']);
+    Route::get('/getAllUsersForumPosts', [ApiController::class, 'getAllUsersForumPosts']);
+    Route::get('/getAllFriendsForumPosts', [ApiController::class, 'getAllFriendsForumPosts']);
 });
 
 

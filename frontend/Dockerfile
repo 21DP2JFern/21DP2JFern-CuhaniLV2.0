@@ -1,21 +1,31 @@
-# Dockerfile
-FROM node:18-alpine as build
+# Set the base image to PHP 8.1
+FROM php:8.1-fpm
 
-# create destination directory
-RUN mkdir -p /usr/src/app
-WORKDIR /usr/src/app
+# Set the working directory in the container
+WORKDIR /var/www
 
-# update and install dependency
-RUN apk update && apk upgrade
-RUN apk add git
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libjpeg62-turbo-dev \
+    libfreetype6-dev \
+    zip \
+    unzip \
+    libonig-dev \
+    libxml2-dev \
+    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
 
-# copy the app, note .dockerignore
-COPY . /usr/src/app/
-RUN yarn install
-RUN yarn run build
+# Install Composer globally
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-FROM nginx:stable-alpine
-COPY --from=build /usr/src/app/dist /bin/www
-COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 3000
-CMD [ "nginx", "-g", "daemon off;" ]
+# Copy the existing application directory contents into the container
+COPY . /var/www
+
+# Set permissions for the www-data user
+RUN chown -R www-data:www-data /var/www
+
+# Expose port 9000 and start PHP-FPM server
+EXPOSE 9000
+CMD ["php-fpm"]

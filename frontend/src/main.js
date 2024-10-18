@@ -7,7 +7,7 @@ import header from './components/Header.vue'
 
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://10.0.20.56';
+axios.defaults.baseURL = 'http://10.0.20.56:8081';
 
 const app = createApp(App)
 

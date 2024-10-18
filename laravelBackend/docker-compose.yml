@@ -23,7 +23,7 @@ services:
       - ./laraveBackend:/var/www
       - ./laraveBackend/docker/nginx/conf.d:/etc/nginx/conf.d
     ports:
-      - "8080:80"   # Expose port 8080 for Nginx
+      - "8081:80"   # Expose port 8080 for Nginx
     networks:
       - app-network
     depends_on:

@@ -20,7 +20,7 @@ services:
       - ./laravelBackend:/var/www
       - ./laravelBackend/docker/nginx/conf.d:/etc/nginx/conf.d
     ports:
-      - "8080:80"
+      - "8081:80"
     networks:
       - app-network
     depends_on:

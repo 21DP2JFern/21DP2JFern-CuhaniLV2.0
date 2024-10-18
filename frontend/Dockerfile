@@ -1,31 +1,21 @@
-# Set the base image to PHP 8.1
-FROM php:8.1-fpm
+# Use official Node.js image as a parent image
+FROM node:16
 
-# Set the working directory in the container
-WORKDIR /var/www
+# Set working directory inside the container
+WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    zip \
-    unzip \
-    libonig-dev \
-    libxml2-dev \
-    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
+# Copy the package.json and install dependencies
+COPY package*.json ./
+RUN npm install
 
-# Install Composer globally
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Copy the rest of the application code to the working directory
+COPY . .
 
-# Copy the existing application directory contents into the container
-COPY . /var/www
+# Build the Vue.js app for production
+RUN npm run build
 
-# Set permissions for the www-data user
-RUN chown -R www-data:www-data /var/www
+# Expose port 3000 for development (if using npm run serve) or the build if served via a server
+EXPOSE 3000
 
-# Expose port 9000 and start PHP-FPM server
-EXPOSE 9000
-CMD ["php-fpm"]
+# Default command to run the frontend app
+CMD ["npm", "run", "serve"]

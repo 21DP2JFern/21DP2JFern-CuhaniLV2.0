@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # Laravel App (PHP-FPM)
+  app:
+    build:
+      context: ./laravelBackend
+      dockerfile: Dockerfile
+    container_name: laravel-app
+    volumes:
+      - ./laravelBackend:/var/www
+      - ./laravelBackend/docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
+    depends_on:
+      - db
+
+  # Nginx Web Server
+  web:
+    image: nginx:alpine
+    container_name: laravel-webserver
+    volumes:
+      - ./laraveBackend:/var/www
+      - ./laraveBackend/docker/nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - "8080:80"   # Expose port 8080 for Nginx
+    networks:
+      - app-network
+    depends_on:
+      - app
+
+  # MySQL Database
+  db:
+    image: mysql:5.7
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: laravel
+      MYSQL_PASSWORD: laravel_password
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - app-network
+
+volumes:
+  dbdata:
+
+networks:
+  app-network:
+    driver: bridge
